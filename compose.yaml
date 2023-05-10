@@ -1,0 +1,10 @@
+services:
+  serverless:
+    build:
+      context: ./
+      dockerfile: Dockerfile.dev
+    tty: true
+    volumes:
+      - .:/app
+    env_file:
+      - docker.env

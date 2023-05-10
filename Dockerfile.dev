@@ -1,0 +1,24 @@
+FROM node:18.16.0
+
+WORKDIR /app
+
+COPY . .
+
+RUN apt-get update && apt-get install -y less vim curl unzip sudo
+
+# install aws cli v2 
+RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" \
+  && unzip awscliv2.zip \
+  && sudo ./aws/install
+
+# install serverless framework
+RUN npm install -g serverless
+
+# login to aws
+# RUN serverless config credentials \
+#   --provider aws \
+#   --key $AWS_ACCESS_KEY_ID \
+#   --secret $AWS_SECRET_ACCESS_KEY
+
+
+CMD ["/bin/bash"]
