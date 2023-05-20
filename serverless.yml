@@ -8,13 +8,7 @@ provider:
   runtime: nodejs18.x
   region: ap-northeast-1
   stage: dev
-  # logRetentionInDays: 1
-
-# custom:
-#   logSubscription:
-#     destinationArn:
-#       Fn::GetAtt: [firehoseDeliveryStream, Arn]
-#     filterPattern: ''
+  logRetentionInDays: 1
 
 functions:
   hello:
@@ -23,32 +17,9 @@ functions:
       - httpApi:
         path: /hello
         method: get
-      # - cloudwatchLog: /aws/lambda/hello
-    # logSubscription: true
 
 resources:
   Resources:
-    # lambdaLogGroup:
-    #   Type: AWS::Logs::LogGroup
-    #   Properties:
-    #     LogGroupName: /aws/lambda/${self:service}-${self:provider.stage}-hello
-    #     RetentionInDays: 1
-
-    # cloudWatchLogsPolicy:
-    #   Type: AWS::IAM::Policy
-    #   Properties:
-    #     PolicyName: CloudWatchLogsPolicy
-    #     PolicyDocument:
-    #       Version: "2012-10-17"
-    #       Statement:
-    #         - Effect: Allow
-    #           Action:
-    #             - logs:CreateLogStream
-    #             - logs:PutLogEvents
-    #           Resource: arn:aws:logs:*:*:log-group:/aws/lambda/${self:service}-${self:provider.stage}-hello:*
-    #     Roles:
-    #       - { "Ref": "IamRoleLambdaExecution" }
-
     cloudWatchLogsSubscriptionFilter:
       Type: AWS::Logs::SubscriptionFilter
       Properties:
